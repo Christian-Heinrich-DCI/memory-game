@@ -1,88 +1,70 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 
+// Array: Alle Karten
 const cards = [
-  { id: 0, color: "#f3722c", label: "Orange", show: false },
-  { id: 1, color: "#f3722c", label: "Orange", show: false },
-  { id: 2, color: "#f8961e", label: "Peach", show: false },
-  { id: 3, color: "#f8961e", label: "Peach", show: false },
-  { id: 4, color: "#f9c74f", label: "Banana", show: false },
-  { id: 5, color: "#f9c74f", label: "Banana", show: false },
-  { id: 6, color: "#90be6d", label: "Grape", show: false },
-  { id: 7, color: "#90be6d", label: "Grape", show: false },
-  { id: 8, color: "#43aa8b", label: "Kiwi", show: false },
-  { id: 9, color: "#43aa8b", label: "Kiwi", show: false },
-  { id: 10, color: "#577590", label: "Plum", show: false },
-  { id: 11, color: "#577590", label: "Plum", show: false },
+  // Einzelnes Objekt beschreibt eine Karte
+  { color: "#f3722c", label: "Orange" },
+  { color: "#f8961e", label: "Peach" },
+  { color: "#f9c74f", label: "Banana" },
+  { color: "#90be6d", label: "Grape" },
+  { color: "#43aa8b", label: "Kiwi" },
+  { color: "#577590", label: "Plum" },
 ];
 
-function shuffle(array) {
-  let currentIndex = array.length,
-    randomIndex;
-
-  // While there remain elements to shuffle...
-  while (currentIndex != 0) {
-    // Pick a remaining element...
-    randomIndex = Math.floor(Math.random() * currentIndex);
-    currentIndex--;
-
-    // And swap it with the current element.
-    [array[currentIndex], array[randomIndex]] = [
-      array[randomIndex],
-      array[currentIndex],
-    ];
-  }
-
-  return array;
-}
-
 function App() {
-  const [gameBoard, setGameboard] = useState([]);
-  const [currentCard, setCurrentCard] = useState(null);
-  const [previousCard, setPreviousCard] = useState();
-  const [clicked, setClicked] = useState(0);
+  // useState = benutze React "Status" / "Zustand"
+  // Beobachte Punkte
+  const [punkte, setPunkte] = useState(0);
+  const [nachricht, setNachricht] = useState("");
 
-  // Beim ersten Laden Seite
-  useEffect(() => {
-    setGameboard(shuffle(cards));
-  }, []);
-
-  useEffect(() => {
-    if (currentCard !== null) {
-      // KARTE ANZEIGEN
-      const clickedCard = gameBoard.filter((card) => card.id === currentCard);
-      clickedCard[0].show = true;
-      setGameboard([...gameBoard], clickedCard[0]);
-      setClicked(clicked + 1);
-    }
-  }, [currentCard]);
+  useEffect(
+    () => {
+      // was soll ich machen?
+      // Wenn ich 10 Punkte habe,
+      if (punkte === 10) {
+        // dann möchte ich ausgeben: "Zeit abgelaufen"
+        // habe kein Ort / Variable um irgendeine Nachricht anzuzeigen
+        // -> muss die anlegen
+        setNachricht("Zeit abgelaufen");
+      }
+    },
+    // was soll ich im Auge behalten? -> []
+    [punkte]
+  );
 
   return (
     <div className="App">
-      <header>{currentCard}</header>
+      <aside>
+        <h1>MEMORY GAME</h1>
+        <p>
+          <strong>PUNKTE:</strong> {punkte}
+        </p>
+        <p>
+          <strong>Nachricht:</strong> {nachricht}
+        </p>
+      </aside>
+
       <main>
-        {gameBoard.map((card, index) =>
-          card.show ? (
+        {cards.map((karte, index) => {
+          return (
+            // EINE KARTE
             <figure
-              className="card"
               key={index}
               style={{
-                backgroundColor: card.color,
+                backgroundColor: karte.color,
               }}
-              onClick={() => setCurrentCard(card.id)}
+              className="card"
+              onClick={() => {
+                // Wenn Karte geklickt wurde:
+                console.log("Karte wurde geklickt!");
+                setPunkte(punkte + 1);
+              }}
             >
-              {card.label}
+              {karte.label}
             </figure>
-          ) : (
-            <figure
-              className="card hidden"
-              key={index}
-              onClick={() => setCurrentCard(card.id)}
-            >
-              MEMORY GAME
-            </figure>
-          )
-        )}
+          );
+        })}
       </main>
     </div>
   );
