@@ -13,9 +13,11 @@
 - Spielfeld: 12 Felder -> 4x3
 
 - Punkte: zählt hoch, wenn eine Karte geklickt wird
+- STATE NAME: punkte
 - Sonderfälle: Punkt nicht zählen, wenn ?!?
 
 STATE: Spielfeld (was ist bereits fertig aufgedeckt)
+NAME: spielfeld
 
 ## Design
 
