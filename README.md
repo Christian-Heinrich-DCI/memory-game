@@ -2,7 +2,7 @@
 
 ## Voraussetzungen
 
-- es gibt 6 Karten
+- es gibt 6 unterschiedliche Karten
 
   - Eigenschaften:
     - Vorderseite: Beschriftung (Frucht), Hintergrundfarbe
