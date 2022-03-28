@@ -122,7 +122,6 @@ function App() {
         {spielfeld.map((karte, index) => {
           return (
             <motion.figure
-              key={index}
               // ANIMATIONS
               // https://www.npmjs.com/package/framer-motion
               animate={{}}
